@@ -392,7 +392,8 @@ def make_model_for_variant(variant_name, venv, seed=SEED, verbose=1):
                   policy_kwargs=dict(net_arch=[256, 256, 128]))
     elif variant_name == "a2c_vne":
         return A2C("MlpPolicy", venv, verbose=verbose, seed=seed,
-                  learning_rate=7e-4, n_steps=5,
+                  learning_rate=3e-4, n_steps=512, gamma=0.99,
+                  ent_coef=0.01, vf_coef=0.5,
                   policy_kwargs=dict(net_arch=[256, 256, 128]))
     elif variant_name in ["drl_vne", "drl_sfcp"]:
         return PPO("MlpPolicy", venv, verbose=verbose, seed=seed,
@@ -551,7 +552,6 @@ plt.tight_layout()
 plt.savefig('vne_results.png', dpi=300, bbox_inches='tight')
 print("\n✅ Plot saved!")
 plt.show()
-
 print("\n" + "="*80)
 print("DONE! Key insight:")
 print("- Trained on EASIER problem (50 nodes, 3-8 VN nodes)")
